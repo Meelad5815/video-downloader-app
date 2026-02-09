@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Downloader - Download Videos from Any Platform</title>
+    <meta name="description" content="Free video downloader supporting YouTube, Vimeo, Twitter, Facebook, Instagram and 1000+ platforms">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background-animation">
+        <div class="circle circle-1"></div>
+        <div class="circle circle-2"></div>
+        <div class="circle circle-3"></div>
+    </div>
+
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <span class="logo-icon">🎥</span>
+                <span class="logo-text">VideoDownloader</span>
+            </div>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#supported">Supported Sites</a>
+                <a href="#howto">How to Use</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1 class="hero-title">Download Videos from Any Platform</h1>
+                <p class="hero-subtitle">Fast, free, and easy video downloader supporting 1000+ websites</p>
+                
+                <div class="download-card">
+                    <form id="downloadForm">
+                        <div class="input-wrapper">
+                            <input 
+                                type="text" 
+                                id="videoUrl" 
+                                placeholder="Paste your video URL here (YouTube, Vimeo, Twitter, etc.)" 
+                                required
+                                autocomplete="off"
+                            >
+                            <span class="input-icon">🔗</span>
+                        </div>
+                        
+                        <div class="quality-selector">
+                            <label for="quality">Select Quality:</label>
+                            <select id="quality" name="quality">
+                                <option value="best">🌟 Best Quality</option>
+                                <option value="1080">📹 1080p HD</option>
+                                <option value="720">📹 720p HD</option>
+                                <option value="480">📱 480p</option>
+                                <option value="360">📱 360p</option>
+                            </select>
+                        </div>
+                        
+                        <button type="submit" class="download-btn" id="downloadBtn">
+                            <span class="btn-text">Download Video</span>
+                            <span class="btn-icon">⬇️</span>
+                        </button>
+                    </form>
+                    
+                    <div class="loader" id="loader">
+                        <div class="spinner"></div>
+                        <p>Downloading your video...</p>
+                    </div>
+                    
+                    <div class="message" id="message"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="features">
+            <div class="container">
+                <h2 class="section-title">Why Choose Our Video Downloader?</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h3>Lightning Fast</h3>
+                        <p>Download videos at maximum speed with our optimized infrastructure</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🌍</div>
+                        <h3>1000+ Sites</h3>
+                        <p>Support for YouTube, Vimeo, Twitter, Facebook, Instagram, TikTok and more</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎬</div>
+                        <h3>Multiple Formats</h3>
+                        <p>Choose from various quality options from 360p to 1080p HD</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔒</div>
+                        <h3>100% Secure</h3>
+                        <p>Your privacy matters. No data collection, no registration required</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💰</div>
+                        <h3>Completely Free</h3>
+                        <p>No hidden costs, no premium plans. Download unlimited videos for free</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📱</div>
+                        <h3>Mobile Friendly</h3>
+                        <p>Works perfectly on all devices - desktop, tablet, and mobile</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="supported" class="supported-sites">
+            <div class="container">
+                <h2 class="section-title">Supported Platforms</h2>
+                <div class="sites-grid">
+                    <div class="site-badge">📺 YouTube</div>
+                    <div class="site-badge">🎬 Vimeo</div>
+                    <div class="site-badge">🐦 Twitter/X</div>
+                    <div class="site-badge">📘 Facebook</div>
+                    <div class="site-badge">📸 Instagram</div>
+                    <div class="site-badge">🎵 TikTok</div>
+                    <div class="site-badge">🎥 Dailymotion</div>
+                    <div class="site-badge">🔴 Twitch</div>
+                    <div class="site-badge">📹 Reddit</div>
+                    <div class="site-badge">🌐 And 1000+ More!</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="howto" class="how-to-use">
+            <div class="container">
+                <h2 class="section-title">How to Download Videos</h2>
+                <div class="steps-grid">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h3>Copy Video URL</h3>
+                        <p>Go to the video you want to download and copy its URL from the address bar</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h3>Paste URL</h3>
+                        <p>Paste the URL into the input field above and select your preferred quality</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h3>Download</h3>
+                        <p>Click the download button and your video will be saved to your device</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="faq">
+            <div class="container">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <h3>Is this service free?</h3>
+                        <p>Yes! Our video downloader is completely free with no hidden charges or premium plans.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3>Do I need to create an account?</h3>
+                        <p>No registration required! Just paste the URL and download your video instantly.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3>What video quality can I download?</h3>
+                        <p>You can choose from 360p to 1080p HD, or select the best available quality option.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3>Is it legal to download videos?</h3>
+                        <p>Please respect copyright laws. Only download videos you have permission to download.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>🎥 VideoDownloader</h3>
+                    <p>The fastest and easiest way to download videos from any platform.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <a href="#features">Features</a>
+                    <a href="#supported">Supported Sites</a>
+                    <a href="#howto">How to Use</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <a href="https://github.com/Meelad5815/video-downloader-app" target="_blank">GitHub</a>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 VideoDownloader. Made with ❤️ by Meelad5815</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
