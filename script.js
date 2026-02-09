@@ -1,9 +1,16 @@
-// API Configuration
-// For local development, use: http://localhost:5000
-// For production, replace with your deployed backend URL
-const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
-    ? 'http://localhost:5000' 
-    : 'http://localhost:5000'; // Update this with your production API URL
+// API Configuration - Automatically detects environment
+const getApiUrl = () => {
+    // Check if we're on localhost
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+        return 'http://localhost:5000';
+    }
+    
+    // Production: Use deployed backend
+    // UPDATE THIS after deploying backend to Render/Railway/Heroku
+    return 'https://video-downloader-api.onrender.com';
+};
+
+const API_URL = getApiUrl();
 
 // DOM Elements
 const downloadForm = document.getElementById('downloadForm');
@@ -18,16 +25,33 @@ window.addEventListener('load', checkBackendConnection);
 
 async function checkBackendConnection() {
     try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 5000);
+        
         const response = await fetch(API_URL, { 
             method: 'GET',
-            mode: 'cors'
+            mode: 'cors',
+            signal: controller.signal
         });
+        
+        clearTimeout(timeoutId);
+        
         if (response.ok) {
             console.log('✅ Backend connection successful');
+            const data = await response.json();
+            console.log('📡 API Status:', data);
         }
     } catch (error) {
-        console.warn('⚠️ Backend not connected. Make sure to run: python api.py');
-        showMessage('⚠️ Backend server not running. Please start the server with: python api.py', 'error');
+        if (error.name === 'AbortError') {
+            console.warn('⚠️ Backend connection timeout');
+        } else {
+            console.warn('⚠️ Backend not connected:', error.message);
+        }
+        
+        // Only show error on localhost
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+            showMessage('⚠️ Local backend not running. For local development, run: python api.py', 'error');
+        }
     }
 }
 
@@ -59,7 +83,10 @@ async function downloadVideo(url, quality) {
         loader.classList.add('active');
         message.classList.remove('active');
         downloadBtn.disabled = true;
-        downloadBtn.querySelector('.btn-text').textContent = 'Downloading...';
+        downloadBtn.querySelector('.btn-text').textContent = 'Processing...';
+        
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 60000); // 60 second timeout
         
         const response = await fetch(`${API_URL}/download`, {
             method: 'POST',
@@ -67,8 +94,11 @@ async function downloadVideo(url, quality) {
                 'Content-Type': 'application/json'
             },
             mode: 'cors',
+            signal: controller.signal,
             body: JSON.stringify({ url, quality })
         });
+        
+        clearTimeout(timeoutId);
         
         const data = await response.json();
         
@@ -88,6 +118,15 @@ async function downloadVideo(url, quality) {
                 const successText = document.createElement('div');
                 successText.innerHTML = `<strong>✅ ${data.title || 'Video'} is ready!</strong>`;
                 message.appendChild(successText);
+                
+                if (data.duration) {
+                    const duration = document.createElement('div');
+                    duration.style.fontSize = '0.9em';
+                    duration.style.marginTop = '5px';
+                    duration.textContent = `Duration: ${formatDuration(data.duration)}`;
+                    message.appendChild(duration);
+                }
+                
                 message.appendChild(document.createElement('br'));
                 message.appendChild(downloadLink);
             }
@@ -97,15 +136,17 @@ async function downloadVideo(url, quality) {
     } catch (error) {
         console.error('Download error:', error);
         
-        let errorMessage = '❌ Connection error. ';
+        let errorMessage = '❌ ';
         
-        if (error.message.includes('Failed to fetch') || error.name === 'TypeError') {
-            errorMessage += 'Backend server is not running. Please follow these steps:\n\n';
-            errorMessage += '1. Open terminal/command prompt\n';
-            errorMessage += '2. Navigate to project folder\n';
-            errorMessage += '3. Run: pip install -r requirements.txt\n';
-            errorMessage += '4. Run: python api.py\n';
-            errorMessage += '5. Refresh this page';
+        if (error.name === 'AbortError') {
+            errorMessage += 'Download timeout. The video might be too large or the server is busy. Please try again.';
+        } else if (error.message.includes('Failed to fetch') || error.name === 'TypeError') {
+            errorMessage += 'Cannot connect to server. ';
+            if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                errorMessage += 'Please make sure backend is running: python api.py';
+            } else {
+                errorMessage += 'The backend service might be starting up. Please wait a moment and try again.';
+            }
         } else {
             errorMessage += error.message;
         }
@@ -118,16 +159,31 @@ async function downloadVideo(url, quality) {
     }
 }
 
+// Format duration from seconds to readable format
+function formatDuration(seconds) {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const secs = Math.floor(seconds % 60);
+    
+    if (hours > 0) {
+        return `${hours}h ${minutes}m ${secs}s`;
+    } else if (minutes > 0) {
+        return `${minutes}m ${secs}s`;
+    } else {
+        return `${secs}s`;
+    }
+}
+
 // Show Message Function
 function showMessage(text, type) {
     message.innerHTML = text.replace(/\n/g, '<br>');
     message.className = `message ${type} active`;
     
-    // Auto hide success messages after 10 seconds
+    // Auto hide success messages after 15 seconds
     if (type === 'success') {
         setTimeout(() => {
             message.classList.remove('active');
-        }, 10000);
+        }, 15000);
     }
 }
 
@@ -135,7 +191,6 @@ function showMessage(text, type) {
 function isValidUrl(string) {
     try {
         const url = new URL(string);
-        // Check if it's http or https
         return url.protocol === 'http:' || url.protocol === 'https:';
     } catch (_) {
         return false;
@@ -193,7 +248,7 @@ document.head.appendChild(style);
 console.log(`
 %c🎥 Video Downloader App
 %cBackend API: ${API_URL}
-%cMake sure backend is running: python api.py
+%cEnvironment: ${window.location.hostname === 'localhost' ? 'Development' : 'Production'}
 `, 
 'color: #667eea; font-size: 20px; font-weight: bold;',
 'color: #764ba2; font-size: 14px;',
