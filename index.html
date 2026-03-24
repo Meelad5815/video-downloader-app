@@ -3,9 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Downloader - Download Videos from Any Platform</title>
-    <meta name="description" content="Free video downloader supporting YouTube, Vimeo, Twitter, Facebook, Instagram and 1000+ platforms">
+    <title>Video Downloader | Fast Online Video Downloader for 1000+ Sites</title>
+    <meta name="description" content="Download videos quickly with our free online video downloader. Supports YouTube, Facebook, Instagram, TikTok, Vimeo, Twitter/X and 1000+ websites.">
+    <meta name="keywords" content="video downloader, online video downloader, youtube downloader, facebook video download, instagram video downloader, tiktok downloader">
+    <meta name="author" content="Hafiz Muhammad Meead Raza Attari Khokhar">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Video Downloader | Download Videos from Any Platform">
+    <meta property="og:description" content="Fast, free, and secure online video downloader with multiple quality options.">
+    <meta property="og:url" content="https://meelad5815.github.io/video-downloader-app/">
+    <meta property="og:site_name" content="VideoDownloader">
+    <meta property="og:locale" content="en_US">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Video Downloader | Download Videos from Any Platform">
+    <meta name="twitter:description" content="Download videos in HD quality from 1000+ platforms for free.">
+    <link rel="canonical" href="https://meelad5815.github.io/video-downloader-app/">
     <link rel="stylesheet" href="style.css">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "VideoDownloader",
+      "url": "https://meelad5815.github.io/video-downloader-app/",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "Web Browser",
+      "description": "Free online video downloader supporting 1000+ platforms with multiple quality options.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "creator": {
+        "@type": "Person",
+        "name": "Hafiz Muhammad Meead Raza Attari Khokhar"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is this service free?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. This video downloader is completely free to use."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need to create an account?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No registration is required. Paste your URL and start downloading."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What video quality can I download?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You can choose from 360p to 1080p HD, including best available quality."
+          }
+        }
+      ]
+    }
+    </script>
 </head>
 <body>
     <div class="background-animation">
@@ -24,6 +89,7 @@
                 <a href="#features">Features</a>
                 <a href="#supported">Supported Sites</a>
                 <a href="#howto">How to Use</a>
+                <a href="#about-creator">About Creator</a>
             </div>
         </nav>
     </header>
@@ -33,20 +99,20 @@
             <div class="container">
                 <h1 class="hero-title">Download Videos from Any Platform</h1>
                 <p class="hero-subtitle">Fast, free, and easy video downloader supporting 1000+ websites</p>
-                
+
                 <div class="download-card">
                     <form id="downloadForm">
                         <div class="input-wrapper">
-                            <input 
-                                type="text" 
-                                id="videoUrl" 
-                                placeholder="Paste your video URL here (YouTube, Vimeo, Twitter, etc.)" 
+                            <input
+                                type="text"
+                                id="videoUrl"
+                                placeholder="Paste your video URL here (YouTube, Vimeo, Twitter, etc.)"
                                 required
                                 autocomplete="off"
                             >
                             <span class="input-icon">🔗</span>
                         </div>
-                        
+
                         <div class="quality-selector">
                             <label for="quality">Select Quality:</label>
                             <select id="quality" name="quality">
@@ -57,18 +123,18 @@
                                 <option value="360">📱 360p</option>
                             </select>
                         </div>
-                        
+
                         <button type="submit" class="download-btn" id="downloadBtn">
                             <span class="btn-text">Download Video</span>
                             <span class="btn-icon">⬇️</span>
                         </button>
                     </form>
-                    
+
                     <div class="loader" id="loader">
                         <div class="spinner"></div>
                         <p>Downloading your video...</p>
                     </div>
-                    
+
                     <div class="message" id="message"></div>
                 </div>
             </div>
@@ -153,6 +219,24 @@
             </div>
         </section>
 
+        <section id="about-creator" class="creator-section">
+            <div class="container">
+                <h2 class="section-title">About the Creator</h2>
+                <div class="creator-card">
+                    <h3>HAFIZ MUHAMMAD MEEAD RAZA ATTARI KHOKHAR</h3>
+                    <p>
+                        This website is created and managed by <strong>Hafiz Muhammad Meead Raza Attari Khokhar</strong>.
+                        The goal of this platform is to provide a fast, simple, and user-friendly experience for downloading videos
+                        from multiple platforms with high quality and reliable performance.
+                    </p>
+                    <p>
+                        We continuously improve the website with advanced features, better speed, strong security, and SEO best practices
+                        so users can easily find and use this service.
+                    </p>
+                </div>
+            </div>
+        </section>
+
         <section class="faq">
             <div class="container">
                 <h2 class="section-title">Frequently Asked Questions</h2>
@@ -190,16 +274,17 @@
                     <a href="#features">Features</a>
                     <a href="#supported">Supported Sites</a>
                     <a href="#howto">How to Use</a>
+                    <a href="#about-creator">About Creator</a>
                 </div>
                 <div class="footer-section">
                     <h4>Resources</h4>
-                    <a href="https://github.com/Meelad5815/video-downloader-app" target="_blank">GitHub</a>
+                    <a href="https://github.com/Meelad5815/video-downloader-app" target="_blank" rel="noopener noreferrer">GitHub</a>
                     <a href="#">Privacy Policy</a>
                     <a href="#">Terms of Service</a>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 VideoDownloader. Made with ❤️ by Meelad5815</p>
+                <p>&copy; 2026 VideoDownloader. Made with ❤️ by HAFIZ MUHAMMAD MEEAD RAZA ATTARI KHOKHAR</p>
             </div>
         </div>
     </footer>
