@@ -38,7 +38,7 @@ async function checkBackendConnection() {
         
         if (response.ok) {
             console.log('✅ Backend connection successful');
-            const data = await response.json();
+            const data = await parseApiResponse(response);
             console.log('📡 API Status:', data);
         }
     } catch (error) {
@@ -100,7 +100,7 @@ async function downloadVideo(url, quality) {
         
         clearTimeout(timeoutId);
         
-        const data = await response.json();
+        const data = await parseApiResponse(response);
         
         if (response.ok) {
             showMessage('✅ Video downloaded successfully!', 'success');
@@ -131,7 +131,8 @@ async function downloadVideo(url, quality) {
                 message.appendChild(downloadLink);
             }
         } else {
-            showMessage(`❌ ${data.error || 'Download failed. Please try again with a different URL.'}`, 'error');
+            const apiError = typeof data === 'object' && data !== null ? data.error : '';
+            showMessage(`❌ ${apiError || 'Download failed. Please try again with a different URL.'}`, 'error');
         }
     } catch (error) {
         console.error('Download error:', error);
@@ -147,6 +148,8 @@ async function downloadVideo(url, quality) {
             } else {
                 errorMessage += 'The backend service might be starting up. Please wait a moment and try again.';
             }
+        } else if (error.message.includes('Unexpected token')) {
+            errorMessage += 'Server response format error. Please verify backend API URL and try again.';
         } else {
             errorMessage += error.message;
         }
@@ -156,6 +159,33 @@ async function downloadVideo(url, quality) {
         loader.classList.remove('active');
         downloadBtn.disabled = false;
         downloadBtn.querySelector('.btn-text').textContent = 'Download Video';
+    }
+}
+
+// Safely parse API responses (JSON or text/HTML fallback)
+async function parseApiResponse(response) {
+    const contentType = response.headers.get('content-type') || '';
+
+    if (contentType.includes('application/json')) {
+        return response.json();
+    }
+
+    const text = await response.text();
+
+    try {
+        return JSON.parse(text);
+    } catch (_) {
+        const cleanText = text.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+
+        if (!response.ok) {
+            return {
+                error: cleanText || `Server returned ${response.status} ${response.statusText}`
+            };
+        }
+
+        return {
+            message: cleanText || 'Request completed.'
+        };
     }
 }
 
