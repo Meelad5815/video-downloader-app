@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://meelad5815.github.io/video-downloader-app/sitemap.xml
